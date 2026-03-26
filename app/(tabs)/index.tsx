@@ -1,20 +1,20 @@
-import { Link } from "expo-router";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  FlatList,
-  RefreshControl,
-} from "react-native";
-import { styles } from "../../styles/feed.styles";
+import { Loader } from "@/components/Loader";
+import Post from "@/components/Post";
+import StoriesSection from "@/components/Stories";
+import { COLORS } from "@/constants/theme";
+import { api } from "@/convex/_generated/api";
 import { useAuth } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS } from "@/constants/theme";
 import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { Loader } from "@/components/Loader";
+import {
+  FlatList,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { styles } from "../../styles/feed.styles";
 import { useState } from "react";
-import StoriesSection from "@/components/Stories";
 
 export default function Index() {
   const { signOut } = useAuth();
@@ -30,8 +30,9 @@ export default function Index() {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
-    }, 2000); // After 2 seconds, it sets refreshing back to false.
+    }, 2000);
   };
+
   return (
     <View style={styles.container}>
       {/* HEADER */}

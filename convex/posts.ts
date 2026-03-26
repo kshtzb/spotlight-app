@@ -38,20 +38,18 @@ export const createPost = mutation({
     return postId;
   },
 });
-
 export const getFeedPosts = query({
   handler: async (ctx) => {
     const currentUser = await getAuthenticatedUser(ctx);
 
     // get all posts
     const posts = await ctx.db.query("posts").order("desc").collect();
-
     if (posts.length === 0) return [];
 
     // enhance posts with userdata and interaction status
     const postsWithInfo = await Promise.all(
       posts.map(async (post) => {
-        const postAuthor = await ctx.db.get(post.userId);
+        const postAuthor = (await ctx.db.get(post.userId))!;
 
         const like = await ctx.db
           .query("likes")
